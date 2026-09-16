@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>FanMeet — Creator'larla tanış</title>
+  <meta name="description" content="FanMeet: Fan ve Creator'ların güvenli şekilde keşfettiği, ilan verdiği ve iletişim kurduğu platform.">
+  <meta name="theme-color" content="#FBF6F3">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%23F0508A'/><stop offset='1' stop-color='%237A3BD0'/></linearGradient></defs><rect width='64' height='64' rx='18' fill='url(%23g)'/><text x='32' y='44' font-family='Georgia' font-style='italic' font-size='34' fill='white' text-anchor='middle'>f</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <a class="logo" href="#/harita" aria-label="FanMeet ana sayfa"><span class="logo-mark">f</span><span class="logo-word">Fan<em>Meet</em></span></a>
+      <nav class="side-nav" id="side-nav"></nav>
+      <div class="side-card" id="side-card"></div>
+      <div class="demo-box">
+        <span class="demo-label">Demo görünümü</span>
+        <div class="role-switch" id="role-switch">
+          <button data-role="fan">Fan</button><button data-role="creator">Creator</button>
+        </div>
+        <a class="admin-link" href="admin.html" target="_blank" rel="noopener">Admin paneli ↗</a>
+      </div>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <a class="logo logo-sm" href="#/harita"><span class="logo-mark">f</span><span class="logo-word">Fan<em>Meet</em></span></a>
+        <h1 class="page-title" id="page-title"></h1>
+        <div class="top-actions">
+          <div class="role-switch role-switch-sm" id="role-switch-sm">
+            <button data-role="fan">Fan</button><button data-role="creator">Creator</button>
+          </div>
+          <a class="token-pill" href="#/jeton" id="token-pill"></a>
+          <button class="icon-btn" id="bell" aria-label="Bildirimler"><span class="dot" id="bell-dot"></span></button>
+          <a class="me-avatar" href="#/profil" id="me-avatar" aria-label="Profilim"></a>
+        </div>
+      </header>
+      <main id="view" class="view"></main>
+    </div>
+
+    <nav class="bottom-nav" id="bottom-nav"></nav>
+  </div>
+
+  <div class="notif-panel" id="notif-panel" hidden></div>
+  <div id="modal-root"></div>
+  <div class="toasts" id="toasts"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/icons.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
