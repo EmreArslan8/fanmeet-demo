@@ -122,8 +122,21 @@
 .person b { font-weight: 600; }
 
 /* ===== Keşfet ===== */
-.discover { display: grid; grid-template-columns: minmax(0, 440px) minmax(0, 1fr); gap: 32px; align-items: start; }
+.discover-head { width: min(100%, 460px); margin-left: auto; margin-right: auto; }
+.discover { display: flex; justify-content: center; }
+.discover-stage { width: min(100%, 460px); }
+.discover-quota {
+  min-height: 48px; margin-bottom: 12px; padding: 9px 14px; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px;
+  border: 1px solid rgba(255, 255, 255, .8); border-radius: 16px; background: rgba(255, 255, 255, .62);
+  -webkit-backdrop-filter: blur(18px) saturate(135%); backdrop-filter: blur(18px) saturate(135%); box-shadow: 0 8px 24px rgba(54, 35, 59, .08);
+}
+.discover-quota .eyebrow { white-space: nowrap; }
+.discover-quota b { font-family: var(--f-display); font-size: 24px; line-height: 1; }
+.discover-quota b small { font-family: var(--f-body); font-size: 12px; color: var(--muted); }
+.quota-track { height: 4px; overflow: hidden; border-radius: 99px; background: var(--bg-2); }
+.quota-track i { display: block; height: 100%; border-radius: inherit; background: var(--grad); }
 .deck { position: relative; aspect-ratio: 3 / 4.1; }
+.discover-stage .deck { height: clamp(440px, calc(100dvh - 320px), 620px); aspect-ratio: auto; }
 .deck-card {
   position: absolute; inset: 0; border-radius: 28px; overflow: hidden; background: #ddd; box-shadow: var(--sh-3);
   touch-action: pan-y; user-select: none; transition: transform .35s var(--ease), opacity .35s;
@@ -147,7 +160,11 @@
 .stamp.pass { right: 24px; color: #fff; transform: rotate(12deg); }
 .stamp.view { left: 24px; color: #FF9BC4; transform: rotate(-12deg); }
 .deck-actions { display: flex; justify-content: center; align-items: center; gap: 18px; margin-top: 22px; }
-.discover-swipe-hint { text-align: center; margin-top: 12px; }
+.discover-stage .deck-actions { position: relative; z-index: 5; gap: 13px; margin-top: -29px; }
+.discover-stage .round { width: 54px; height: 54px; }
+.discover-stage .round.big { width: 66px; height: 66px; }
+.discover-stage .round.big .ic { width: 26px; height: 26px; }
+.discover-swipe-hint { display: none; }
 .round { width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center; background: var(--surface); border: 1px solid var(--line); box-shadow: var(--sh-2); transition: transform .2s var(--ease); }
 .round:hover { transform: translateY(-3px); }
 .round.big { width: 74px; height: 74px; background: var(--grad); color: #fff; border: 0; box-shadow: 0 14px 30px rgba(200, 60, 140, .38); }
@@ -377,8 +394,7 @@ ul.rules { list-style: none; margin: 0; padding: 0; }
   .inbox { grid-template-columns: 300px 1fr; }
 }
 @media (max-width: 860px) {
-  .discover { grid-template-columns: 1fr; justify-items: center; }
-  .discover > * { width: 100%; max-width: 440px; }
+  .discover-stage { width: 100%; max-width: 440px; }
   .map-layout { grid-template-columns: 1fr; height: auto; }
   .map-box { height: 62dvh; min-height: 420px; }
   .map-side .card { max-height: 420px; }
@@ -423,9 +439,9 @@ ul.rules { list-style: none; margin: 0; padding: 0; }
   body.nav-moving .bottom-nav .nav-label { max-height: 0; opacity: 0; transform: translateY(5px); }
   body.nav-moving .bottom-nav .count { top: 3px; }
   .view-kesfet { padding-top: 0; }
-  .view-kesfet .section-head, .view-kesfet .discover-side, .view-kesfet .discover-swipe-hint { display: none; }
+  .view-kesfet .section-head, .view-kesfet .discover-quota, .view-kesfet .discover-swipe-hint { display: none; }
   .view-kesfet .discover { display: block; }
-  .view-kesfet .discover > div:first-child { width: 100%; max-width: none; margin: 0; }
+  .view-kesfet .discover-stage { width: 100%; max-width: none; margin: 0; }
   .view-kesfet .deck {
     width: 100%; height: calc(100dvh - 60px - 96px - 72px); min-height: 420px; max-height: 720px; aspect-ratio: auto;
   }

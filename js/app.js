@@ -383,15 +383,14 @@
         <p class="xs muted discover-swipe-hint">Sola kaydır: geç · Sağa kaydır: profili gör</p>`;
     }
 
-    v.innerHTML = `<div class="section-head"><div><span class="eyebrow">Keşfet</span><h2>${S.role === 'fan' ? 'Bugün tanışabileceğin <em>creator</em>\'lar' : 'Seni keşfetmeye hazır <em>fanlar</em>'}</h2></div></div>
-      <div class="discover"><div>${deck}</div>
-      <div class="discover-side">
-        <div class="card card-pad quota">
+    v.innerHTML = `<div class="section-head discover-head"><div><span class="eyebrow">Keşfet</span><h2>${S.role === 'fan' ? 'Bugün tanışabileceğin <em>creator</em>\'lar' : 'Seni keşfetmeye hazır <em>fanlar</em>'}</h2></div></div>
+      <div class="discover"><div class="discover-stage">
+        <div class="discover-quota">
           <span class="eyebrow">Günlük keşif</span>
-          <div class="quota-num">${remaining}<small> / ${limit} profil kaldı</small></div>
-          <div class="meter"><i style="width:${(remaining / limit) * 100}%"></i></div>
-          <p class="xs muted">Haklar her gece 00:00'da yenilenir.${S.role === 'fan' && u.plan !== 'pro' ? ` <a href="#/abonelik" style="color:var(--rose);font-weight:600">Daha fazla profil</a>` : ''}</p>
+          <span class="quota-track"><i style="width:${(remaining / limit) * 100}%"></i></span>
+          <b>${remaining}<small> / ${limit}</small></b>
         </div>
+        ${deck}
       </div></div>`;
 
     $('#restart', v)?.addEventListener('click', () => { S.discover[meId()] = null; save(); refresh(); });
