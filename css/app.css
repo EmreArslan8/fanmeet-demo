@@ -147,6 +147,7 @@
 .stamp.pass { right: 24px; color: #fff; transform: rotate(12deg); }
 .stamp.view { left: 24px; color: #FF9BC4; transform: rotate(-12deg); }
 .deck-actions { display: flex; justify-content: center; align-items: center; gap: 18px; margin-top: 22px; }
+.discover-swipe-hint { text-align: center; margin-top: 12px; }
 .round { width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center; background: var(--surface); border: 1px solid var(--line); box-shadow: var(--sh-2); transition: transform .2s var(--ease); }
 .round:hover { transform: translateY(-3px); }
 .round.big { width: 74px; height: 74px; background: var(--grad); color: #fff; border: 0; box-shadow: 0 14px 30px rgba(200, 60, 140, .38); }
@@ -403,12 +404,42 @@ ul.rules { list-style: none; margin: 0; padding: 0; }
   .section-head h2 { font-size: 28px; }
   .bottom-nav {
     display: grid; grid-template-columns: repeat(5, 1fr); position: fixed; z-index: 40; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom));
-    height: 66px; padding: 0 6px; border-radius: 24px; background: rgba(29, 19, 38, .94); backdrop-filter: blur(16px); box-shadow: var(--sh-3);
+    height: 66px; padding: 0 6px; border-radius: 24px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, .76), rgba(255, 248, 252, .58));
+    border: 1px solid rgba(255, 255, 255, .82);
+    -webkit-backdrop-filter: blur(24px) saturate(150%); backdrop-filter: blur(24px) saturate(150%);
+    box-shadow: 0 18px 42px rgba(66, 40, 73, .18), inset 0 1px 0 rgba(255, 255, 255, .92);
+    transition: left .28s var(--ease), right .28s var(--ease), height .28s var(--ease), border-radius .28s var(--ease), background .28s;
   }
-  .bottom-nav a { display: grid; place-items: center; align-content: center; gap: 3px; color: rgba(255, 255, 255, .55); font-size: 10.5px; font-weight: 600; position: relative; }
-  .bottom-nav a.on { color: #fff; }
-  .bottom-nav a.on .ic { color: #F79CC0; }
+  .bottom-nav a { display: grid; place-items: center; align-content: center; gap: 3px; color: rgba(68, 57, 73, .58); font-size: 10.5px; font-weight: 600; position: relative; transition: color .2s, transform .28s var(--ease); }
+  .bottom-nav a .ic { transition: width .28s var(--ease), height .28s var(--ease), transform .28s var(--ease); }
+  .bottom-nav .nav-label { max-height: 16px; opacity: 1; transform: translateY(0); overflow: hidden; transition: max-height .2s, opacity .16s, transform .2s; }
+  .bottom-nav a.on { color: var(--ink); }
+  .bottom-nav a.on .ic { color: var(--rose); filter: drop-shadow(0 3px 8px rgba(240, 80, 138, .24)); }
   .bottom-nav .count { position: absolute; top: 6px; left: 55%; min-width: 17px; height: 17px; font-size: 10px; }
+  body.nav-moving .bottom-nav { left: 54px; right: 54px; height: 50px; border-radius: 20px; background: rgba(255, 255, 255, .62); }
+  body.nav-moving .bottom-nav a { transform: translateY(0); }
+  body.nav-moving .bottom-nav a .ic { width: 21px; height: 21px; transform: translateY(0); }
+  body.nav-moving .bottom-nav .nav-label { max-height: 0; opacity: 0; transform: translateY(5px); }
+  body.nav-moving .bottom-nav .count { top: 3px; }
+  .view-kesfet { padding-top: 0; }
+  .view-kesfet .section-head, .view-kesfet .discover-side, .view-kesfet .discover-swipe-hint { display: none; }
+  .view-kesfet .discover { display: block; }
+  .view-kesfet .discover > div:first-child { width: 100%; max-width: none; margin: 0; }
+  .view-kesfet .deck {
+    width: 100%; height: calc(100dvh - 60px - 96px - 72px); min-height: 420px; max-height: 720px; aspect-ratio: auto;
+  }
+  .view-kesfet .deck-actions {
+    position: relative; z-index: 5; gap: 12px; margin-top: -27px;
+  }
+  .view-kesfet .round {
+    width: 52px; height: 52px; border-color: rgba(255, 255, 255, .88);
+    box-shadow: 0 10px 26px rgba(29, 19, 38, .16), inset 0 1px 0 rgba(255, 255, 255, .9);
+  }
+  .view-kesfet .round.big {
+    width: 62px; height: 62px; box-shadow: 0 13px 28px rgba(200, 60, 140, .32);
+  }
+  .view-kesfet .round.big .ic { width: 25px; height: 25px; }
   .map-box { height: calc(100dvh - 60px - 110px - 60px); border-radius: 22px; }
   .map-note { right: 16px; bottom: 16px; max-width: none; }
   .inbox { grid-template-columns: 1fr; height: calc(100dvh - 60px - 104px); border-radius: 22px; }

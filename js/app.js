@@ -133,7 +133,7 @@
     if (cleanup) { cleanup(); cleanup = null; }
     const R = parse();
     const view = $('#view');
-    view.className = 'view' + (soft ? ' no-anim' : '');
+    view.className = `view view-${R.name}` + (soft ? ' no-anim' : '');
     if (!soft) { void view.offsetWidth; }
     const y = window.scrollY;
     view.innerHTML = '';
@@ -152,7 +152,7 @@
       const on = R.name === n.r || (n.r === 'profil' && R.name === 'u');
       const badge = n.r === 'mesajlar' && reqCount ? `<span class="count">${reqCount}</span>` : '';
       return mobile
-        ? `<a href="#/${n.r}" class="${on ? 'on' : ''}">${icon(n.i)}${n.t}${badge}</a>`
+        ? `<a href="#/${n.r}" class="${on ? 'on' : ''}">${icon(n.i)}<span class="nav-label">${n.t}</span>${badge}</a>`
         : `<a href="#/${n.r}" class="nav-link ${on ? 'on' : ''}">${icon(n.i)}<span>${n.t}</span>${badge}</a>`;
     }).join('');
     $('#side-nav').innerHTML = navHtml(false);
@@ -380,7 +380,7 @@
           <button class="round big" id="d-msg" aria-label="Mesaj isteği">${icon('send')}</button>
           <button class="round" id="d-view" aria-label="Profili gör" style="color:var(--plum)">${icon('user', 'ic-lg')}</button>
         </div>
-        <p class="xs muted" style="text-align:center;margin-top:12px">Sola kaydır: geç · Sağa kaydır: profili gör</p>`;
+        <p class="xs muted discover-swipe-hint">Sola kaydır: geç · Sağa kaydır: profili gör</p>`;
     }
 
     v.innerHTML = `<div class="section-head"><div><span class="eyebrow">Keşfet</span><h2>${S.role === 'fan' ? 'Bugün tanışabileceğin <em>creator</em>\'lar' : 'Seni keşfetmeye hazır <em>fanlar</em>'}</h2></div></div>
@@ -392,17 +392,6 @@
           <div class="meter"><i style="width:${(remaining / limit) * 100}%"></i></div>
           <p class="xs muted">Haklar her gece 00:00'da yenilenir.${S.role === 'fan' && u.plan !== 'pro' ? ` <a href="#/abonelik" style="color:var(--rose);font-weight:600">Daha fazla profil</a>` : ''}</p>
         </div>
-        <div class="card card-pad">
-          <div class="block-title"><h3>Nasıl çalışır?</h3></div>
-          <ul class="rules">
-            <li>${icon('compass')}<span>Keşfet iki yönlüdür: Fan'lar creator'ları, creator'lar ise fanları keşfeder.</span></li>
-            <li>${icon('shield')}<span>Creator'ların keşfinde yalnızca <b>Premium ve üzeri</b> planı olan fanlar görünür.</span></li>
-            <li>${icon('send')}<span>Beğeni ya da eşleşme yok. Mesaj isteği gönderirsin (${cfg().requestCost} jeton); kabul edilirse sohbet ücretsizdir.</span></li>
-            <li>${icon('sparkle')}<span>Plus ve Pro+ planlar keşifte önceliklidir.</span></li>
-          </ul>
-        </div>
-        ${S.role === 'fan' && u.plan === 'free' ? `<div class="card card-pad" style="background:var(--grad-soft)"><span class="eyebrow">Free plandasın</span>
-          <p style="margin:8px 0 14px">Creator'ların keşif ekranında görünmek için Premium veya üzeri bir plana geç.</p><a class="btn btn-primary btn-sm" href="#/abonelik">Planları Gör</a></div>` : ''}
       </div></div>`;
 
     $('#restart', v)?.addEventListener('click', () => { S.discover[meId()] = null; save(); refresh(); });
@@ -446,6 +435,7 @@
     function onMove(e) {
       if (!drag) return;
       dx = e.clientX - sx;
+      if (Math.abs(dx) > 4) document.body.classList.add('nav-moving');
       const c = top();
       c.style.transform = `translateX(${dx}px) rotate(${dx / 18}deg)`;
       c.querySelector('.stamp.pass').style.opacity = Math.min(1, -dx / 90);
@@ -454,6 +444,7 @@
     function onUp() {
       if (!drag) return;
       drag = false;
+      setTimeout(() => document.body.classList.remove('nav-moving'), 180);
       const c = top();
       if (dx < -110) $('#d-pass', v).click();
       else if (dx > 110) $('#d-view', v).click();
@@ -1357,6 +1348,14 @@
 
   /* ---------- Başlat ---------- */
   window.addEventListener('hashchange', () => { closeModal(); render(); });
-  window.addEventListener('scroll', () => $('.topbar').classList.toggle('scrolled', window.scrollY > 4), { passive: true });
+  let navSettle;
+  window.addEventListener('scroll', () => {
+    $('.topbar').classList.toggle('scrolled', window.scrollY > 4);
+    if (window.innerWidth <= 760) {
+      document.body.classList.add('nav-moving');
+      clearTimeout(navSettle);
+      navSettle = setTimeout(() => document.body.classList.remove('nav-moving'), 180);
+    }
+  }, { passive: true });
   render();
 })();
