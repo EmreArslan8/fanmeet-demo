@@ -83,6 +83,17 @@
   }
   const UI = { q: '', status: 'all', role: 'all', lstatus: 'all', rstatus: 'open', ptab: 'fan' };
 
+  function enhanceTables(root) {
+    $$('.table', root).forEach(table => {
+      const headers = $$('thead th', table).map(th => th.textContent.trim());
+      if (!headers.length) return;
+      table.classList.add('responsive-table');
+      $$('tbody tr', table).forEach(row => $$('td', row).forEach((cell, i) => {
+        cell.dataset.label = headers[i] || (cell.querySelector('.acts') ? 'İşlemler' : '');
+      }));
+    });
+  }
+
   function render() {
     const R = parse();
     const c = counts();
@@ -94,6 +105,7 @@
     const v = $('#adm-view');
     v.innerHTML = '';
     V[R.name](v, R);
+    enhanceTables(v);
     $('#adm-side').classList.remove('open');
   }
   const refresh = () => { const y = scrollY; render(); scrollTo(0, y); };
@@ -607,6 +619,7 @@
 
   /* ---------- Başlat ---------- */
   $('#burger').onclick = () => $('#adm-side').classList.toggle('open');
+  new MutationObserver(() => enhanceTables($('#adm-view'))).observe($('#adm-view'), { childList: true, subtree: true });
   window.addEventListener('hashchange', () => { close(); render(); scrollTo(0, 0); });
   window.addEventListener('storage', e => {
     if (e.key !== FM.KEY) return;
